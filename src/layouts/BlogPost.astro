@@ -1,0 +1,70 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import HeaderLink from "../components/HeaderLink.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+
+type Props = CollectionEntry<"blog">["data"];
+
+const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+
+const { pathname } = Astro.url;
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+
+    <style>
+      .title {
+        font-size: 2em;
+        margin: 0.25em 0 0;
+      }
+      hr {
+        border-top: 1px solid #ddd;
+        margin: 1rem 0;
+      }
+      .last-updated-on {
+        font-style: italic;
+      }
+      iframe {
+        border: none;
+      }
+    </style>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"
+      integrity="sha512-WIklPM6qPCIp6d3fSSr90j+1unQHUOoWDS4sdTiR8gxUTnyZ8S2Mr8e10sKKJ/bhJgpAa/qG068RDkg6fIlNFA=="
+      crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+    {
+      pathname === "/about" ? (
+        <HeaderLink href="/">Home</HeaderLink>
+      ) : (
+        <HeaderLink href="/blog">Blog</HeaderLink>
+      )
+    }
+
+    <main>
+      <article>
+        {heroImage && <img width={720} height={360} src={heroImage} alt="" />}
+
+        <h1 class="title">{title}</h1>
+        <div class="last-updated-on">
+          Published on <FormattedDate date={pubDate} />
+        </div>
+        {
+          updatedDate && (
+            <div class="last-updated-on">
+              {" "}
+              Last updated on <FormattedDate date={updatedDate} />{" "}
+            </div>
+          )
+        }
+        <hr />
+        <slot />
+      </article>
+    </main>
+  </body>
+</html>
