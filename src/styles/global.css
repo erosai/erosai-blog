@@ -3,17 +3,89 @@
   https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
   License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
  */
+:root {
+  --accent: rgb(42, 59, 46);
+  --baseAnimationSpeed: 0.4s;
+  --background: #e8f9f0;
+}
 body {
-  font-family: JetBrains Mono, monospace;
+  font-family: "Inter", sans-serif;
   margin: auto;
-  padding: 20px;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   max-width: 65ch;
   text-align: left;
-  background-color: #fcfaef;
+  background: rgb(255, 255, 255);
+  background: -moz-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(232, 249, 240, 1) 80%,
+    rgba(232, 249, 240, 1) 100%
+  );
+  background: -webkit-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(232, 249, 240, 1) 80%,
+    rgba(232, 249, 240, 1) 100%
+  );
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(232, 249, 240, 1) 80%,
+    rgba(232, 249, 240, 1) 100%
+  );
+
   word-wrap: break-word;
   overflow-wrap: break-word;
-  line-height: 2;
-  color: #0c0c0cb0;
+  line-height: 1.2;
+  color: #999;
+}
+.background-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  transform: translateZnrd(42px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  margin-left: auto;
+  margin-right: auto;
+  height: 90vh;
+  z-index: -1;
+  -webkit-perspective: 1000;
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+  }
+}
+
+.background-grid-item {
+  /* transition-duration: 11497ms !important; */
+  border: 0px dashed #e8f9f0;
+  /* filter: blur(10px); */
+}
+.background-grid-item:hover {
+  border: 1px dashed #e8f9f0;
+  background-color: #e8f9f0;
+  transition-duration: 0ms !important;
+}
+
+h1 {
+  font-size: 2.4rem !important;
+  font-family: "Inter", monospace;
+  font-weight: 800 !important;
+}
+h2 {
+  font-size: 1.3rem !important;
+  font-family: "Inter", monospace;
+  font-weight: 600;
+}
+h3 {
+  font-size: 1.1rem !important;
 }
 h1,
 h2,
@@ -28,9 +100,7 @@ b {
 a {
   color: #222;
 }
-nav a {
-  margin-right: 10px;
-}
+
 textarea {
   width: 100%;
   font-size: 16px;
@@ -39,7 +109,7 @@ input {
   font-size: 16px;
 }
 content {
-  line-height: 2.6;
+  line-height: 2.1;
 }
 table {
   width: 100%;
@@ -59,15 +129,35 @@ pre > code {
   all: unset;
 }
 blockquote {
-  border: 1px solid #999;
+  border: 1px dashed #999;
   color: #222;
-  padding: 2px 0px 2px 20px;
+  padding: 4px 20px 4px 20px;
   margin: 0px;
   font-style: italic;
+  background-color: white;
 }
 .container {
   min-height: 100vh;
 }
 p {
-  line-height: 2.6;
+  line-height: 1.8;
+  color: #353535;
+}
+.animate {
+  animation: animate-background 0.4s linear;
+}
+@keyframes animate-background {
+  0% {
+    opacity: 0%;
+  }
+  50% {
+    opacity: 50%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+nav {
+  margin-top: 7vh;
+  text-align: right;
 }

@@ -16,5 +16,64 @@ const { Content } = await post.render();
 ---
 
 <BlogPost {...post.data}>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const svgElement = document.querySelector(".signature");
+      let options = {
+        root: null, // Use the viewport as the root
+        rootMargin: "0px",
+        threshold: 0.7, // Trigger when 70% of the element is visible
+      };
+
+      let callback = (entries: any, observer: any) => {
+        entries.forEach((entry: any) => {
+          if (entry.isIntersecting && svgElement !== null) {
+            svgElement.classList.add("animate");
+            observer.unobserve(entry.target); // Stop observing once the animation is triggered
+          }
+        });
+      };
+
+      let observer = new IntersectionObserver(callback, options);
+      observer.observe(svgElement as Element);
+    });
+  </script>
+  <style>
+    .signature {
+      stroke-dasharray: 1200;
+      stroke-dashoffset: 1200;
+      pointer-events: none;
+    }
+
+    .animate {
+      animation: animateDash 8s 0.2s ease-out forwards;
+    }
+    @keyframes animateDash {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+    .signature-section {
+      width: 100%;
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+      text-align: end;
+    }
+  </style>
   <Content />
+  <div class="signature-section">
+    <svg
+      width="135"
+      viewBox="0 0 75 41"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      class="signature"
+    >
+      <path
+        d="M2.32408 7.61433C3.73725 7.61433 5.20289 7.24881 6.58274 7.03883C10.2233 6.48484 13.8715 6.02087 17.5363 5.65765C19.9197 5.42142 22.9078 4.80615 25.3342 5.14929C26.6829 5.34001 23.1162 6.7799 21.8525 7.28821C17.6431 8.98144 13.3363 10.4271 9.05736 11.9305C7.24908 12.5659 4.92173 13.1421 3.20651 14.1174C2.34726 14.606 5.18423 14.0901 6.1703 14.0215C7.59296 13.9225 10.6921 13.3446 12.0116 14.3092C13.1187 15.1186 9.67297 16.858 9.65204 16.8702C9.13153 17.173 8.59616 17.45 8.05984 17.7238C7.69429 17.9105 7.3195 18.0785 6.94722 18.2514C6.78233 18.3279 6.36017 18.3131 6.44845 18.472C6.53959 18.636 6.81303 18.3829 6.99517 18.3377C9.59569 17.6929 9.27388 17.757 12.7405 16.9757C28.8863 13.3368 45.2621 9.87577 61.7918 8.60226C63.5026 8.47045 65.2171 8.36268 66.9329 8.34328C67.9436 8.33186 70.5969 8.19994 69.9062 8.93796C69.5451 9.32388 68.9509 9.39778 68.4483 9.56141C66.6272 10.1543 64.1301 10.6498 62.3097 11.0097C60.3378 11.3997 58.6106 11.7042 56.6507 11.9977C53.3773 12.4878 56.7901 11.881 56.8425 11.873C60.2162 11.3564 63.6131 10.9007 67.0192 10.6644C68.4248 10.5669 72.2086 10.4962 71.1723 11.451C68.9654 13.4843 60.0313 15.8574 62.9236 15.0574C65.8887 14.2372 69.4257 13.27 71.9205 11.451C73.5269 10.2796 73.8485 8.72209 72.7358 7.04842C70.8349 4.18929 66.9749 3.02978 63.7676 2.60753C57.7897 1.8205 51.5145 2.76121 45.9081 4.89991C43.0628 5.98536 37.7865 8.2 41.4385 11.873C46.3152 16.7778 58.4321 19.7287 55.3846 29.0419C53.7694 33.9781 48.8682 36.7274 44.4502 38.691"
+        stroke="black"
+        stroke-width="1"
+        stroke-linecap="round"></path>
+    </svg>
+  </div>
 </BlogPost>

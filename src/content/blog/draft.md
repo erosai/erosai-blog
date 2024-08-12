@@ -1,19 +1,12 @@
 ---
-title: "Init."
+title: "Draft"
 description: "A celebration of my first blog post 🎉"
-pubDate: "Jun 18 2024"
+pubDate: "Jun 28 2024"
 heroImage: "/perlin.js"
 tag: "misc"
 ---
 
-## Honestly, I do not have any idea how to write a blog post.
-
-Obviously, it isn't easy. As soon as I start writing, my brain mutes itself and I get stuck in the empty void of my thoughts, alone without even myself. So I guess it is a form of meditation.
-After I wrote this previous paragraph, I have been stuck thinking on what to write next for about 30 minutes. Just staring at the screen, like a maniac.
-
-### So why do this ?
-
-I think that writing will help me produce clearer thoughts, help me express myself better. Also I like creating stuff, I like making music, cooking, drawing, and developing cool and unique ideas. This is just another way for me to create, and maybe in the future get good at it so other people can benefit from it too.
+I always have a sense of calmness when reading a book. Having my ‘brain voice’ narrate something to myself using words that someone much more skilled than me has written, is a truly relaxing experience.
 
 Writing something is a bit different, you come face to face with the vagueness and slowness of your thoughts. You realize that you do most of your inner monologue as if writting with autocomplete. That is one of the reasons I have decided to start writing.
 

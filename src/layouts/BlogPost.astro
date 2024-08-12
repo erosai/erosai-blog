@@ -1,7 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
-import HeaderLink from "../components/HeaderLink.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 
 type Props = CollectionEntry<"blog">["data"];
@@ -9,62 +8,151 @@ type Props = CollectionEntry<"blog">["data"];
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 
 const { pathname } = Astro.url;
+
+function stringToNumberSequence(str: string) {
+  let numberSequence = 0;
+
+  for (let i = 0; i < str.length; i++) {
+    numberSequence += str.charCodeAt(i) + 14 + 21;
+  }
+
+  return numberSequence;
+}
+
+const handle_hide_item = () => {
+  const drawing = document.getElementById("hide-timer");
+  if (!drawing) return;
+  drawing.style.opacity = "0";
+  drawing.style.transitionDuration = "400ms";
+  setTimeout(() => {
+    drawing.style.display = "none";
+  });
+};
+
+const server_rand = stringToNumberSequence(title + pubDate + description);
+console.log(server_rand);
 ---
 
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description} />
-
+    <BaseHead title={title + " 📖"} description={description} />
     <style>
       .title {
         font-size: 2em;
+        line-height: 1.4;
         margin: 0.25em 0 0;
+        padding-top: 2rem;
       }
       hr {
         border-top: 1px solid #ddd;
         margin: 1rem 0;
       }
       .last-updated-on {
-        font-style: italic;
+        font-size: 0.85em;
       }
       iframe {
         border: none;
       }
+      .drawing {
+        backdrop-filter: blur(20px, 20px);
+        background-color: red;
+        height: 20vh;
+        width: 100%;
+      }
+      .placeholder {
+        height: 40vh;
+        width: 100%;
+      }
+      .drawing-text {
+        font-size: 0.85em !important;
+        margin: 0.5em 0;
+        opacity: 0.4 !important;
+      }
+      main {
+        min-height: 100vh !important;
+      }
     </style>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"
-      integrity="sha512-WIklPM6qPCIp6d3fSSr90j+1unQHUOoWDS4sdTiR8gxUTnyZ8S2Mr8e10sKKJ/bhJgpAa/qG068RDkg6fIlNFA=="
-      crossorigin="anonymous"></script>
   </head>
 
-  <body>
-    {
-      pathname === "/about" ? (
-        <HeaderLink href="/">Home</HeaderLink>
-      ) : (
-        <HeaderLink href="/blog">Blog</HeaderLink>
-      )
-    }
+  <body data-server-rand={server_rand}>
+    <script
+      class="pointer-events-none z-0"
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script is:inline>
+      // Embed the server_rand variable
+      let rand = document.body.dataset.serverRand;
+      if (rand < 100000) rand += 12142105;
 
-    <main>
-      <article>
-        {heroImage && <img width={720} height={360} src={heroImage} alt="" />}
+      function setup() {
+        let canv = createCanvas(windowWidth / 2, windowHeight / 2);
+        canv.position(windowWidth / 4, 0);
+        stroke(0.8, 40.8, 10.8);
+        frameRate(60);
+        strokeWeight(0.04);
+        noFill();
+        t = 0;
+      }
 
-        <h1 class="title">{title}</h1>
-        <div class="last-updated-on">
-          Published on <FormattedDate date={pubDate} />
-        </div>
-        {
-          updatedDate && (
-            <div class="last-updated-on">
-              {" "}
-              Last updated on <FormattedDate date={updatedDate} />{" "}
-            </div>
-          )
+      function draw() {
+        if (t > 300) return;
+        translate(width / 2, height / 2.3 + noise(t * 0.0000001));
+        beginShape();
+        for (var i = 0; i < 20; i++) {
+          var ang = map(i + 1, 0, 20, rand, cos(rand) * TWO_PI + rand);
+          var rad = 160 * cos(t * 0.000001 * rand, i * 0.000005 + rand);
+          var x = rad * cos(ang) + noise(rand);
+          var y = rad * sin(ang) + noise(rand);
+          curveVertex(x, y);
         }
-        <hr />
-        <slot />
+        endShape(CLOSE);
+
+        t += 1;
+      }
+    </script>
+    <script is:inline>
+      async function sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+      for (let i = 0; i < 100; i++) {
+        const gridItem = document.getElementById(
+          `grid-item-${(Math.random() * 450).toFixed(0)}`,
+        );
+        if (!gridItem) continue;
+        gridItem.style.transitionDuration = "0ms";
+        gridItem.style.backgroundColor = `#e8f9f0`;
+        await sleep(20);
+        gridItem.style.transitionDuration = "11400ms";
+        gridItem.style.backgroundColor = ``;
+      }
+    </script>
+    <main>
+      <div class="background-grid">
+        {
+          Array.from({ length: 50 }).map((_, i) => (
+            <div class="background-grid-item" id={`grid-item-${i}`} />
+          ))
+        }
+      </div>
+
+      <article>
+        <div class="placeholder"></div>
       </article>
+      <h1 class="title">{title}</h1>
+      <div class="last-updated-on">
+        Published on <FormattedDate date={pubDate} />
+      </div>
+      {
+        updatedDate && (
+          <div class="last-updated-on">
+            {" "}
+            Last updated on <FormattedDate date={updatedDate} />{" "}
+          </div>
+        )
+      }
+      <hr />
+
+      <slot />
     </main>
   </body>
 </html>

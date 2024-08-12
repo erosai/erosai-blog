@@ -4,9 +4,9 @@ import { SITE_TITLE } from "../consts";
 ---
 
 <header>
-  <nav>
-    <HeaderLink href="https://twitter.com/erorsaini" target="_blank">
-      Twitter
+  <nav class="animate">
+    <HeaderLink href="https://github.com/erosai" target="_blank">
+      Linkedin
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="14"
@@ -17,7 +17,7 @@ import { SITE_TITLE } from "../consts";
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
-        class="lucide lucide-arrow-up-right-square"
+        class="lucide-arrow-up-right-square"
         ><rect width="18" height="18" x="3" y="3" rx="2"></rect><path
           d="M8 8h8v8"></path><path d="m8 16 8-8"></path></svg
       >
@@ -34,7 +34,7 @@ import { SITE_TITLE } from "../consts";
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
-        class="lucide lucide-arrow-up-right-square"
+        class="lucide-arrow-up-right-square"
         ><rect width="18" height="18" x="3" y="3" rx="2"></rect><path
           d="M8 8h8v8"></path><path d="m8 16 8-8"></path></svg
       >
@@ -46,7 +46,17 @@ import { SITE_TITLE } from "../consts";
     margin: 0em 0 2em;
     padding: 0em 0;
   }
+  nav {
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+    align-items: center;
+  }
   h2 {
     margin: 0.5em 0;
+  }
+  a {
+    font-size: 0.9rem !important;
+    font-weight: 600 !important ;
   }
 </style>

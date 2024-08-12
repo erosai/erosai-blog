@@ -7,21 +7,18 @@ import { getCollection } from "astro:content";
 import FormattedDate from "../../components/FormattedDate.astro";
 import { ViewTransitions } from "astro:transitions";
 
-const posts = (await getCollection("blog")).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+const work = (await getCollection("work")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
-console.log(posts);
+console.log(work);
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
     <ViewTransitions />
     <style>
-      main {
-        min-height: 100vh;
-      }
       ul {
         list-style-type: none;
         padding: unset;
@@ -29,8 +26,7 @@ console.log(posts);
 
       ul li a:hover {
         background-color: #e3f8ed !important;
-        /* outline: 0.5px dashed var(--accent); */
-        border-radius: 1rem;
+        outline: 0.5px dashed var(--accent);
         transition-duration: 0.2s;
       }
       ul li {
@@ -68,11 +64,13 @@ console.log(posts);
       p {
         font-size: 0.9rem;
       }
+      main {
+        min-height: 100vh;
+      }
     </style>
   </head>
   <body>
     <main>
-      <div class="background-grid"></div>
       <HeaderLink href="/" style="padding-bottom : 3rem ;">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -93,12 +91,12 @@ console.log(posts);
       <section>
         <ul>
           {
-            posts.map((post) => (
+            work.map((w) => (
               <li>
-                <a href={`/blog/${post.slug}/`}>
-                  <p>{post.data.title}</p>
+                <a href={`/work/${w.slug}/`}>
+                  <p>{w.data.title}</p>
                   <div style="height : 1px ; width : 100% ; background-color : #03030333;" />
-                  <FormattedDate date={post.data.pubDate} />
+                  <FormattedDate date={w.data.pubDate} />
                 </a>
               </li>
             ))
