@@ -6,14 +6,21 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { ViewTransitions } from "astro:transitions";
 ---
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-    <ViewTransitions />
+
     <style>
       b {
         color: var(--accent);
+      }
+      .work-status {
+        font-size: 0.8rem !important;
+        padding-inline: 0.5rem;
+        background-color: var(--accent);
+        border-radius: var(--radius);
+        color: white;
       }
       .gradient-border {
         position: fixed;
@@ -27,10 +34,13 @@ import { ViewTransitions } from "astro:transitions";
       .tooltip {
         position: relative;
         display: inline-block;
-        font-size: 1.1rem !important;
+        font-size: 1rem !important;
         font-weight: 600 !important;
+        color: var(--accent);
+        border-bottom: 1px dashed var(--accent);
       }
       .avatar-img {
+        pointer-events: none;
         width: 70px;
         height: 70px;
         object-position: bottom;
@@ -50,26 +60,30 @@ import { ViewTransitions } from "astro:transitions";
         visibility: hidden;
         width: 250px;
         background-color: var(--background);
-        border: 1px dotted var(--background);
         color: var(--accent);
         padding: 15px 15px;
         top: 80%;
         opacity: 0.9;
+        border-radius: var(--radius);
         color: var(--accent);
-        border: 1px dashed var(--accent);
         position: absolute;
         z-index: 1;
         font-size: 0.8rem;
         transition-duration: 400ms;
         opacity: 0;
+        -webkit-perspective: 1000;
         transform: translateY(10px);
       }
 
       .tooltip:hover .tooltiptext {
         visibility: visible;
+        overflow: hidden;
+        width: 250px;
         opacity: 1;
         transition-duration: 400ms;
         transform: translateY(0px);
+        tranform: translateX(0px);
+        box-shadow: var(--shadow);
       }
       main {
         display: flex;
@@ -90,9 +104,8 @@ import { ViewTransitions } from "astro:transitions";
         width: 100%;
         flex-direction: row;
         justify-content: space-between;
-
         padding-bottom: 0px;
-        align-items: center;
+        align-items: baseline;
       }
       @keyframes animate-background {
         0% {
@@ -110,16 +123,22 @@ import { ViewTransitions } from "astro:transitions";
       function sleep(ms: number) {
         return new Promise((resolve) => setTimeout(resolve, ms));
       }
+
       for (let i = 0; i < 1500; i++) {
         const gridItem = document.getElementById(
-          `grid-item-${(Math.random() * 450).toFixed(0)}`,
+          `grid-item-${(Math.random() * 450).toFixed(0)}`
         );
         if (!gridItem) continue;
+
         // #e8f9f0
-        gridItem.style.transitionDuration = "100ms";
+        //grid item
+        gridItem.style.transitionDuration = "500ms";
         gridItem.style.backgroundColor = `hsl(148, 59%, ${
-          85 + Math.random() * 10
+          85 + Math.random() * 20
         }%)`;
+        if (i % 2 == 0) gridItem.style.backgroundColor = `#fff`;
+        gridItem.style.rotate = `${45}deg`;
+        // notification circle
         await sleep(250);
         gridItem.style.transitionDuration = "11400ms";
 
@@ -130,7 +149,7 @@ import { ViewTransitions } from "astro:transitions";
   <body>
     <div class="background-grid">
       {
-        Array.from({ length: 40 }).map((_, i) => (
+        Array.from({ length: 27 }).map((_, i) => (
           <div class="background-grid-item" id={`grid-item-${i}`} />
         ))
       }
@@ -138,7 +157,7 @@ import { ViewTransitions } from "astro:transitions";
     <div class="gradient-border"></div>
     <main class="main">
       <div
-        style="display: flex; flex-direction: row; justify-content: end; padding-bottom: 0px; align-items: center; width: 100%;"
+        style="display: flex; flex-direction: row; justify-content: end; padding-bottom: 0px; align-items: center; width: 100%; pointer-events: none ;"
       >
         <img src="/eror.jpg" class="avatar-img" />
       </div>
@@ -151,56 +170,43 @@ import { ViewTransitions } from "astro:transitions";
             "live long!".</span
           >
         </p>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-info"
-          ><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"
-          ></path><path d="M12 8h.01"></path></svg
-        >
       </div>
       <div class="animate">
         <p class="animate">
           I'm <HeaderLink href="/about"><b>Eror Saini</b></HeaderLink>, a
-          <HeaderLink href="/work">
-            <b>developer</b>
-          </HeaderLink>, and the founder of <HeaderLink
+          developer , and the founder of <HeaderLink
             href="https://ebarnatorja.com"
           >
             <b>eBarnatorja</b>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
               viewBox="0 0 24 24"
+              height="14"
+              width="12"
               fill="none"
               stroke="currentColor"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="lucide-arrow-up-right-square"
-              ><rect width="18" height="18" x="3" y="3" rx="2"></rect><path
-                d="M8 8h8v8"></path><path d="m8 16 8-8"></path></svg
+              class="lucide lucide-arrow-up-right"
+              ><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg
             >
           </HeaderLink>, Kosovo's first digital pharmacy.
 
-          <p class="animate">
+          <!-- <p class="animate">
             I occasionally <HeaderLink href="/blog">
               <b>blog</b>
             </HeaderLink> to challenge myself to write more and to document my thoughts
             and ideas for posterity.
           </p>
+        </p> -->
+          <div class="flex">
+            <Header title={SITE_TITLE} />
+            <div class="animate notif-container">
+              <p class="work-status">Open for opportunities</p>
+            </div>
+          </div>
         </p>
-        <div class="flex">
-          <Header title={SITE_TITLE} />
-        </div>
       </div>
     </main>
   </body>

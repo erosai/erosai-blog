@@ -7,7 +7,11 @@
   --accent: rgb(42, 59, 46);
   --baseAnimationSpeed: 0.4s;
   --background: #e8f9f0;
+  --shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  --radius: 0.4rem;
 }
+
 body {
   font-family: "Inter", sans-serif;
   margin: auto;
@@ -47,7 +51,7 @@ body {
   grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 10px;
   grid-row-gap: 10px;
-  transform: translateZnrd(42px);
+  transition-duration: 4s;
   position: fixed;
   top: 0;
   left: 0;
@@ -56,7 +60,7 @@ body {
   margin-right: auto;
   height: 90vh;
   z-index: -1;
-  -webkit-perspective: 1000;
+
   @media (min-width: 768px) {
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(10, 1fr);
@@ -65,7 +69,9 @@ body {
 
 .background-grid-item {
   /* transition-duration: 11497ms !important; */
-  border: 0px dashed #e8f9f0;
+  width: 100px;
+  height: 100px;
+
   /* filter: blur(10px); */
 }
 .background-grid-item:hover {
@@ -157,7 +163,35 @@ p {
     opacity: 100%;
   }
 }
+.animate-line {
+  animation: animate-width 0.4s ease-in forwards;
+}
+@keyframes animate-width {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
 nav {
   margin-top: 7vh;
   text-align: right;
+}
+.notif-circle {
+  width: 0.4rem;
+  height: 0.4rem;
+  background-color: var(--accent);
+  rotate: 45deg;
+  transition-duration: var(--baseAnimationSpeed);
+}
+
+.notif-container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
 }

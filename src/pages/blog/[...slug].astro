@@ -19,15 +19,25 @@ const { Content } = await post.render();
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const svgElement = document.querySelector(".signature");
+      console.log("SVG Element:", svgElement); // Log the SVG element for debugging
+      if (!svgElement) {
+        console.error("SVG element not found");
+        return;
+      }
+
       let options = {
         root: null, // Use the viewport as the root
         rootMargin: "0px",
-        threshold: 0.7, // Trigger when 70% of the element is visible
+        threshold: 0.1, // More frequent checks
       };
 
-      let callback = (entries: any, observer: any) => {
-        entries.forEach((entry: any) => {
-          if (entry.isIntersecting && svgElement !== null) {
+      let callback = (
+        entries: IntersectionObserverEntry[],
+        observer: IntersectionObserver
+      ) => {
+        entries.forEach((entry) => {
+          console.log("Observer Entry:", entry); // Log observer entries
+          if (entry.isIntersecting) {
             svgElement.classList.add("animate");
             observer.unobserve(entry.target); // Stop observing once the animation is triggered
           }
@@ -35,7 +45,7 @@ const { Content } = await post.render();
       };
 
       let observer = new IntersectionObserver(callback, options);
-      observer.observe(svgElement as Element);
+      observer.observe(svgElement);
     });
   </script>
   <style>
